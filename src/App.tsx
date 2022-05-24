@@ -1,43 +1,24 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import logo from './logo.svg';
 import { useInterval } from "usehooks-ts"
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState<number>(0)
-  // Dynamic delay
-  const [delay, setDelay] = useState<number>(1000)
-  // ON/OFF
-  const [isPlaying, setPlaying] = useState<boolean>(false)
-
-  useInterval(
-    () => {
-      // Your custom logic here
-      setCount(count + 1)
-    },
-    // Delay in milliseconds or null to stop it
-    isPlaying ? delay : null,
-  )
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDelay(Number(event.target.value))
-  }
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   return (
     <>
-      <h1>{count}</h1>
-      <button onClick={() => setPlaying(!isPlaying)}>
-        {isPlaying ? 'pause' : 'play'}
-      </button>
-      <p>
-        <label htmlFor="delay">Delay: </label>
-        <input
-          type="number"
-          name="delay"
-          onChange={handleChange}
-          value={delay}
-        />
-      </p>
+      <div className="main-container">
+			<canvas className="play-area" ref={canvasRef}  />
+			
+			<button onClick={() => {}} className="play-button">
+				Play
+			</button>
+			<div className="scoreBox">
+				<h2>Score: </h2>
+				<h2>High Score: </h2>
+			</div>
+		</div>
     </>
   )
 }
