@@ -27,37 +27,48 @@ function App() {
 				snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1))
 			}
 		}
-	},[snake]);
+	}, [snake]);
 
 	useInterval(() => runGame(), 100)
 
 	const runGame = () => {
-		const newSnake = [ ...snake ]
-		const newSnakeHead = [ newSnake[0][0] + direction[0], newSnake[0][1] + direction[1] ]
+		const newSnake = [...snake]
+		const newSnakeHead = [newSnake[0][0] + direction[0], newSnake[0][1] + direction[1]]
 		newSnake.unshift(newSnakeHead)
+		if (checkCollision(newSnakeHead)) {
+			window.alert("Collision!")
+			setGameOver(true)
+		}
+		
 		setSnake(newSnake)
 	}
 
 	const changeDirection = (e: React.KeyboardEvent<HTMLDivElement>) => {
 		switch (e.key) {
 			case "ArrowLeft":
-				setDirection([ -1, 0 ])
+				setDirection([-1, 0])
 				break
 			case "ArrowUp":
-				setDirection([ 0, -1 ])
+				setDirection([0, -1])
 				break
 			case "ArrowRight":
-				setDirection([ 1, 0 ])
+				setDirection([1, 0])
 				break
 			case "ArrowDown":
-				setDirection([ 0, 1 ])
+				setDirection([0, 1])
 				break
+		}
+	}
+
+	const checkCollision = (head: number[]) => {
+		for (let i = 0; i < head.length; i++) {
+			if (head[i] < 0 || head[i] * scale >= canvasX) return true
 		}
 	}
 
 	return (
 		<>
-			<div onKeyDown={(e) => {changeDirection(e)}}>
+			<div onKeyDown={(e) => { changeDirection(e) }}>
 				<img id="fruit" src={AppleLogo} alt="fruit" width="30" />
 				<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`} />
 				{gameOver && <div className="gameOver">Game Over</div>}
