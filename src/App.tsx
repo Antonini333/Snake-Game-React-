@@ -16,7 +16,18 @@ function App() {
 	const [gameOver, setGameOver] = useState<boolean>(false)
 	const [score, setScore] = useState<number>(0)
 
-
+	useEffect(() => {
+		if (canvasRef.current) {
+			const canvas = canvasRef.current
+			const ctx = canvas.getContext("2d")
+			if (ctx) {
+				ctx.setTransform(scale, 0, 0, scale, 0, 0)
+				ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+				ctx.fillStyle = "#a3d001"
+				snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1))
+			}
+		}
+	},[])
 
 	return (
 		<>
