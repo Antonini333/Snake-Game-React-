@@ -14,6 +14,7 @@ function App() {
 	const [apple, setApple] = useState<number[]>([14, 10])
 	const [direction, setDirection] = useState<number[]>([0, -1])
 	const [gameOver, setGameOver] = useState<boolean>(false)
+	const [ delay, setDelay ] = useState<number | null>(1500)
 	const [score, setScore] = useState<number>(0)
 
 	useEffect(() => {
@@ -31,14 +32,14 @@ function App() {
 		}
 	}, [snake]);
 
-	useInterval(() => runGame(), 1000)
+	useInterval(() => !gameOver? runGame() : null, delay)
 
 	const runGame = () => {
 		const newSnake = [...snake]
 		const newSnakeHead = [newSnake[0][0] + direction[0], newSnake[0][1] + direction[1]]
 		newSnake.unshift(newSnakeHead)
 		if (checkCollision(newSnakeHead)) {
-			window.alert("Collision!")
+			console.log("Collision!")
 			setGameOver(true)
 		}
 		if (!appleAte(newSnake)) {
@@ -85,6 +86,15 @@ function App() {
 		return false
 	}
 
+	const play = () => {
+		setSnake(initialSnake)
+		setApple([14, 10])
+		setDirection([ 1, 0 ])
+		setDelay(1500)
+		setScore(0)
+		setGameOver(false)
+	}
+
 	return (
 	
 			<div tabIndex={0} style={{height: "100vh", width:"100vw"}} onKeyDown={(e) => { changeDirection(e)}}>
@@ -93,7 +103,7 @@ function App() {
 				
 				</canvas>
 				{gameOver && <div className="gameOver">Game Over</div>}
-				<button className="playButton">
+				<button className="playButton" onClick={play}>
 					Play
 			</button>
 				<div className="scoreBox">
