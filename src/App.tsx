@@ -29,7 +29,7 @@ function App() {
 		}
 	}, [snake]);
 
-	useInterval(() => runGame(), 100)
+	useInterval(() => runGame(), 1000)
 
 	const runGame = () => {
 		const newSnake = [...snake]
@@ -47,15 +47,19 @@ function App() {
 		switch (e.key) {
 			case "ArrowLeft":
 				setDirection([-1, 0])
+				window.alert("Left")
 				break
 			case "ArrowUp":
 				setDirection([0, -1])
+				window.alert("Up")
 				break
 			case "ArrowRight":
 				setDirection([1, 0])
+				window.alert("Right")
 				break
 			case "ArrowDown":
 				setDirection([0, 1])
+				window.alert("Down")
 				break
 		}
 	}
@@ -71,8 +75,8 @@ function App() {
 	}
 
 	return (
-		<>
-			<div onKeyDown={(e) => { changeDirection(e) }}>
+	
+			<div tabIndex={0} style={{height: "100vh", width:"100vw"}} onKeyDown={(e) => { console.log(e)}}>
 				<img id="fruit" src={AppleLogo} alt="fruit" width="30" />
 				<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`} />
 				{gameOver && <div className="gameOver">Game Over</div>}
@@ -84,7 +88,7 @@ function App() {
 					<h2>High Score: </h2>
 				</div>
 			</div>
-		</>
+
 	)
 }
 
