@@ -64,6 +64,10 @@ function App() {
 		for (let i = 0; i < head.length; i++) {
 			if (head[i] < 0 || head[i] * scale >= canvasX) return true
 		}
+		for (const s of snake) {
+			if (head[0] === s[0] && head[1] === s[1]) return true
+		}
+		return false
 	}
 
 	return (
