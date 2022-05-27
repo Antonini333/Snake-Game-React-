@@ -5,8 +5,8 @@ import './App.css';
 
 const initialSnake = [[4, 10], [4, 10]];
 const scale = 50
-const canvasX = 1000
-const canvasY = 1000
+const canvasX = 800
+const canvasY = 800
 
 function App() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -27,9 +27,11 @@ function App() {
 				snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1))
 			}
 		}
-	},[]);
+	},[snake]);
 
-	function runGame() {
+	useInterval(() => runGame(), 100)
+
+	const runGame = () => {
 		const newSnake = [ ...snake ]
 		const newSnakeHead = [ newSnake[0][0] + direction[0], newSnake[0][1] + direction[1] ]
 		newSnake.unshift(newSnakeHead)
