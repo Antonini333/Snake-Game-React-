@@ -9,6 +9,12 @@ const canvasX = 800
 const canvasY = 800
 const timeDelay = 200
 
+const dirLeft = [-1, 0]
+const dirUp = [0, -1]
+const dirRight = [1, 0]
+const dirDown = [0, 1]
+
+
 function App() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
 	const [snake, setSnake] = useState(initialSnake)
@@ -52,16 +58,16 @@ function App() {
 	const changeDirection = (e: React.KeyboardEvent<HTMLDivElement>) => {
 		switch (e.key) {
 			case "ArrowLeft":
-				setDirection([-1, 0])
+				setDirection(dirLeft)
 				break
 			case "ArrowUp":
-				setDirection([0, -1])
+				setDirection(dirUp)
 				break
 			case "ArrowRight":
-				setDirection([1, 0])
+				setDirection(dirRight)
 				break
 			case "ArrowDown":
-				setDirection([0, 1])
+				setDirection(dirDown)
 				break
 		}
 	}
@@ -71,6 +77,7 @@ function App() {
 			if (head[i] < 0 || head[i] * scale >= canvasX) return true
 		}
 		for (const s of snake) {
+			// If
 			if (head[0] === s[0] && head[1] === s[1]) return true
 		}
 		return false
@@ -81,7 +88,7 @@ function App() {
 		if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
 			let newApple = coord
 			setScore(score + 1)
-			if (score % 2 && delay) {
+			if (score % 3 && delay) {
 				setDelay(delay-(delay * 10 / 100))
 			}
 			setApple(newApple)
