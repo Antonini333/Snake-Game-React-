@@ -17,6 +17,7 @@ function App() {
 	const [score, setScore] = useState<number>(0)
 
 	useEffect(() => {
+		let fruit = document.getElementById("fruit") as HTMLCanvasElement
 		if (canvasRef.current) {
 			const canvas = canvasRef.current
 			const ctx = canvas.getContext("2d")
@@ -25,6 +26,7 @@ function App() {
 				ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 				ctx.fillStyle = "#a3d001"
 				snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1))
+				ctx.drawImage(fruit, apple[0], apple[1], 1, 1)
 			}
 		}
 	}, [snake]);
