@@ -55,7 +55,7 @@ function App() {
 
 	return (
 		<>
-			<div onKeyDown={() => { }}>
+			<div onKeyDown={(e) => {changeDirection(e)}}>
 				<img id="fruit" src={AppleLogo} alt="fruit" width="30" />
 				<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`} />
 				{gameOver && <div className="gameOver">Game Over</div>}
