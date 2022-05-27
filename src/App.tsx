@@ -27,7 +27,31 @@ function App() {
 				snake.forEach(([x, y]) => ctx.fillRect(x, y, 1, 1))
 			}
 		}
-	},[])
+	},[]);
+
+	function runGame() {
+		const newSnake = [ ...snake ]
+		const newSnakeHead = [ newSnake[0][0] + direction[0], newSnake[0][1] + direction[1] ]
+		newSnake.unshift(newSnakeHead)
+		setSnake(newSnake)
+	}
+
+	const changeDirection = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		switch (e.key) {
+			case "ArrowLeft":
+				setDirection([ -1, 0 ])
+				break
+			case "ArrowUp":
+				setDirection([ 0, -1 ])
+				break
+			case "ArrowRight":
+				setDirection([ 1, 0 ])
+				break
+			case "ArrowDown":
+				setDirection([ 0, 1 ])
+				break
+		}
+	}
 
 	return (
 		<>
