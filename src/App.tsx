@@ -7,6 +7,7 @@ const initialSnake = [[4, 10], [4, 10]];
 const scale = 50
 const canvasX = 800
 const canvasY = 800
+const timeDelay = 200
 
 function App() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -14,7 +15,7 @@ function App() {
 	const [apple, setApple] = useState<number[]>([14, 10])
 	const [direction, setDirection] = useState<number[]>([0, -1])
 	const [gameOver, setGameOver] = useState<boolean>(false)
-	const [ delay, setDelay ] = useState<number | null>(1500)
+	const [delay, setDelay] = useState<number | null>(timeDelay)
 	const [score, setScore] = useState<number>(0)
 
 	useEffect(() => {
@@ -32,7 +33,7 @@ function App() {
 		}
 	}, [snake]);
 
-	useInterval(() => !gameOver? runGame() : null, delay)
+	useInterval(() => !gameOver ? runGame() : null, delay)
 
 	const runGame = () => {
 		const newSnake = [...snake]
@@ -80,6 +81,9 @@ function App() {
 		if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
 			let newApple = coord
 			setScore(score + 1)
+			if (score % 2 && delay) {
+				setDelay(delay-(delay * 10 / 100))
+			}
 			setApple(newApple)
 			return true
 		}
@@ -95,28 +99,29 @@ function App() {
 	const play = () => {
 		setSnake(initialSnake)
 		setApple([14, 10])
-		setDirection([ 1, 0 ])
-		setDelay(1500)
+		setDirection([1, 0])
+		setDelay(timeDelay)
 		setScore(0)
 		setGameOver(false)
 	}
 
 	return (
-	
-			<div tabIndex={0} style={{height: "100vh", width:"100vw"}} onKeyDown={(e) => { changeDirection(e)}}>
-				<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`}>
+
+		<div tabIndex={0} style={{ height: "100vh", width: "100vw" }} onKeyDown={(e) => { changeDirection(e) }}>
+			<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`}>
 				<img id="fruit" src={AppleLogo} alt="fruit" width="30" />
-				
-				</canvas>
-				{gameOver && <div className="gameOver">Game Over</div>}
-				<button className="playButton" onClick={play}>
-					Play
+
+			</canvas>
+			{gameOver && <div className="gameOver">Game Over</div>}
+			<button className="playButton" onClick={play}>
+				Play
 			</button>
-				<div className="scoreBox">
-					<h2>Score: {score}</h2>
-					<h2>High Score: {localStorage.getItem("snakeScore")}</h2>
-				</div>
+			<div className="scoreBox">
+				<h2>Score: {score}</h2>
+				<h2>High Score: {localStorage.getItem("snakeScore")}</h2>
+				<h2>Delay: {delay}</h2>
 			</div>
+		</div>
 
 	)
 }
