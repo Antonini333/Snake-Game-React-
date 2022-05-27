@@ -39,7 +39,7 @@ function App() {
 		const newSnakeHead = [newSnake[0][0] + direction[0], newSnake[0][1] + direction[1]]
 		newSnake.unshift(newSnakeHead)
 		if (checkCollision(newSnakeHead)) {
-			console.log("Collision!")
+			handleSetScore()
 			setGameOver(true)
 		}
 		if (!appleAte(newSnake)) {
@@ -86,6 +86,12 @@ function App() {
 		return false
 	}
 
+	function handleSetScore() {
+		if (score > Number(localStorage.getItem("snakeScore"))) {
+			localStorage.setItem("snakeScore", JSON.stringify(score))
+		}
+	}
+
 	const play = () => {
 		setSnake(initialSnake)
 		setApple([14, 10])
@@ -108,7 +114,7 @@ function App() {
 			</button>
 				<div className="scoreBox">
 					<h2>Score: {score}</h2>
-					<h2>High Score: </h2>
+					<h2>High Score: {localStorage.getItem("snakeScore")}</h2>
 				</div>
 			</div>
 
