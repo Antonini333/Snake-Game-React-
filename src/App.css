@@ -1,18 +1,6 @@
+
+
 * {
-  margin: 0;
-  padding: 0;
-}
-
-.main-container{
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-}
-
-.play-area{
-  border: 3px solid red;
-}
-
-.play-button{
-  height: 2em;
-}
+    margin: 0;
+    padding: 0;
+  }
