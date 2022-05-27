@@ -39,7 +39,9 @@ function App() {
 			window.alert("Collision!")
 			setGameOver(true)
 		}
-		
+		if (!appleAte(newSnake)) {
+			newSnake.pop()
+		}
 		setSnake(newSnake)
 	}
 
@@ -84,8 +86,10 @@ function App() {
 	return (
 	
 			<div tabIndex={0} style={{height: "100vh", width:"100vw"}} onKeyDown={(e) => { changeDirection(e)}}>
+				<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`}>
 				<img id="fruit" src={AppleLogo} alt="fruit" width="30" />
-				<canvas className="playArea" ref={canvasRef} width={`${canvasX}px`} height={`${canvasY}px`} />
+				
+				</canvas>
 				{gameOver && <div className="gameOver">Game Over</div>}
 				<button className="playButton">
 					Play
